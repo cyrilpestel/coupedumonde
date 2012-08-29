@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?><web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.5" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 	<servlet>
 		<servlet-name>MancheClassement</servlet-name>
-		<servlet-class>riskyfoot.coupedumonde.MancheClassementServlet</servlet-class>
+		<servlet-class>riskyfoot.coupedumonde.view.MancheClassementServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>mancheClassement.jsp</servlet-name>
@@ -9,15 +9,15 @@
 	</servlet>
 	<servlet>
 		<servlet-name>Participant</servlet-name>
-		<servlet-class>riskyfoot.coupedumonde.ParticipantServlet</servlet-class>
+		<servlet-class>riskyfoot.coupedumonde.view.ParticipantServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>participant.jsp</servlet-name>
-		<jsp-file>/participant.jsp</jsp-file>
+		<jsp-file>/WEB-INF/jsp/participant.jsp</jsp-file>
 	</servlet>
 	<servlet>
 		<servlet-name>ClassementParticipantFifa</servlet-name>
-		<servlet-class>riskyfoot.coupedumonde.ClassementParticipantFifaServlet</servlet-class>
+		<servlet-class>riskyfoot.coupedumonde.view.ClassementParticipantFifaServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>classementParticipantFifa.jsp</servlet-name>
@@ -29,7 +29,7 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Participant</servlet-name>
-		<url-pattern>/participant</url-pattern>
+		<url-pattern>/admin/participant</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>ClassementParticipantFifa</servlet-name>

@@ -18,6 +18,11 @@ public class CoupeDuMondeService {
 		this.dao = dao;
 	}
 	
+	/**
+	 * Classement des participants selon leur classement riskyfoot 2011/2012 et l'indice fifa.
+	 * @param lp liste des participants
+	 * @return liste des participants
+	 */
 	public List<Participant> classementParticipantFifa(List<Participant> lp) {
 
 		// 1. Récupère le classement Riskyfoot de chaque participant
@@ -25,7 +30,7 @@ public class CoupeDuMondeService {
 		
 		if(lcr!=null) {
 			for(Participant p : lp) {
-				Integer cr = classementRiskyfootParticipant(p, lcr);
+				Integer cr = findClassementRiskyfootParticipant(p, lcr);
 				if(cr!=null)
 					p.setClassementRiskyfoot(cr);
 			}
@@ -51,7 +56,13 @@ public class CoupeDuMondeService {
 		return lp;
 	}
 	
-	protected Integer classementRiskyfootParticipant(Participant p, List<ClassementRiskyfoot> lcr) {
+	/**
+	 * Recherche le classement Riskyfoot du participant.
+	 * @param p le participant
+	 * @param lcr le classement riskyfoot
+	 * @return le classement
+	 */
+	protected Integer findClassementRiskyfootParticipant(Participant p, List<ClassementRiskyfoot> lcr) {
 		for(ClassementRiskyfoot cr : lcr) {
 			if(cr.getPseudo().toLowerCase().equals(p.getPseudo().trim().toLowerCase()))
 				return Integer.valueOf(cr.getClassement());
@@ -59,6 +70,11 @@ public class CoupeDuMondeService {
 		return null;
 	}
 	
+	/**
+	 * Trie du classement des participants selon leur classement Riskyfoot 2011/2012.
+	 * @param lp liste des participants
+	 * @return liste des participants trié
+	 */
 	protected List<Participant> triClassementRiskyfootParticipant(List<Participant> lp) {
 		
 		Collections.sort(lp, new Comparator<Participant>() {
@@ -72,15 +88,41 @@ public class CoupeDuMondeService {
 		return lp;
 	}
 	
-	
-	protected int indexParticipant(Participant p, List<ClassementRiskyfoot> lcr) {
-		for(ClassementRiskyfoot cr : lcr) {
-			if(cr.getPseudo().equals(p.getPseudo()))
-				return Integer.valueOf(cr.getClassement());
+	/**
+	 * Liste des groupes de participants.
+	 * @param lp
+	 * @param nbGroupe
+	 * @return
+	 */
+	public List<List<Participant>> repartition(List<Participant> lp, int nbGroupe) {
+		List<List<Participant>> lg = new ArrayList<List<Participant>>(nbGroupe);
+		
+		// Index du groupe
+		int ig = 0;
+		for(Participant p : lp) {
+			if(ig==nbGroupe)
+				ig = 0;
+			
+			// Liste des participants du groupe 'ig'
+			List<Participant> lpg = null; 
+			if(lg.size()<=ig) {
+				lpg = new ArrayList<Participant>();
+				lg.add(lpg);
+			} else {
+				lpg = lg.get(ig);
+			}
+			
+			lpg.add(p);
+			
+			ig++;
 		}
-		return -1;
+		
+		return lg;
 	}
 
+	/**
+	 * Liste des equipes Fifa de la zone euro.
+	 */
 	public static final String[] fifaEquipes = new String[] { 
 		"Espagne", "Allemagne", "Angleterre", "Portugal", "Italie", "Pays-Bas", "Croatie"
 		, "Danemark", "Russie", "Grèce", "France", "Suède", "République tchèque", "Suisse"

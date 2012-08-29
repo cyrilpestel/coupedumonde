@@ -21,6 +21,29 @@ if(cpf!=null) {
 	}
 }
 %>
+<br/>
+Groupes possibles :<br/>
+<p>
+<%
+List<List<Participant>> groupes = (List<List<Participant>>) request.getAttribute("groupes");
 
+if(groupes!=null) {
+	int ig = 1;
+	for(List<Participant> lp : groupes) {
+		out.println("Groupe "+ig+" :<br/>");
+		
+		int ip = 1;
+		for(Participant p : lp) {
+			out.println(ip+"- "+p.getPseudo()+" : "+p.getClassementRiskyfoot()+" : "+p.getEquipe()+"<br />");
+			ip++;
+		}
+		
+		out.println("<br/>");
+		ig++;
+	}
+}
+
+%>
+</p>
 </body>
 </html>
